@@ -1,29 +1,32 @@
+import example from '../../fixtures/example.json'
+import user from '../../fixtures/user.json'
 /// <reference types="cypress" />
 describe('Login test', () => {
-    const login = Cypress.env('prod').userLogin
-    const password = Cypress.env('prod').userPassword
+
     const wrongPassword = "heslo"
     const wrongLogin = "cypress"
     const baseUrl = Cypress.env('prod').baseUrl
 
     beforeEach(() => {
+        //načtení dat uživatelů z konfiguračního souboru
         cy.visit(baseUrl)
         cy.get("#login").click()
+
     })
 
     it("succes login", () => {
         //prihlaseni uzivatele
-        cy.login(login, password)
+        cy.login(user.b2b.login, user.b2b.pass)
         //spravna url
         cy.url().should('not.include', "login")
         //uzivatel je prihlasen
-        cy.get('#logged-user').contains(login)
+        cy.get('#logged-user').contains(user.b2b.login)
 
     })
 
     it("wrong loginName", () => {
         //prihlaseni uzivatele
-        cy.login(wrongLogin, password)
+        cy.login(wrongLogin, user.b2b.pass)
         //ukazuje se chybova hlaska
         cy.get('.frm__msg-name').should('be.visible').contains
         //uzivatel neni prihlasen
@@ -32,7 +35,7 @@ describe('Login test', () => {
 
     it("wrong password", () => {
         //prihlaseni uzivatele
-        cy.login(login, wrongPassword)
+        cy.login(user.b2b.login, wrongPassword)
         //ukazuje se chybova hlaska
         cy.get('.frm__msg-password').should('be.visible')
         //uzivatel neni prihlasen

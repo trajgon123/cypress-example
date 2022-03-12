@@ -19,6 +19,9 @@ import './loginCommands'
 import './navigationCommands'
 
 beforeEach(() => {
+    //načtení souboru s přihlašovacími daty uživatelů
+    cy.fixture('user').as('user')
+    //potvzení modálního okna s cookies - nutné před každým testem
     cy.clearCookies()
     //pokud neni vybrany env vyber defaultni
     if (Cypress.env('host') == null) {
