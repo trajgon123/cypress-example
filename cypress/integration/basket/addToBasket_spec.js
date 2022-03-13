@@ -1,6 +1,22 @@
+import { preBasket } from './util/preBasketActions'
 /// <reference types="cypress" />
-import { preBasket } from './preBasketActions'
-describe(('testy pridavani do kosiku'), () => {
+describe(('Add to basket'), () => {
+    it(('addToBasketFromCategoryContent'), () => {
+        cy.getCategoryContentPage()
+        //z vypisu produktu zjisti kod produktu pro nasledne overeni
+        cy.get('.new-tile').first().find('.data-code').then(($code) => {
+            var categoryContentCode = $code.text()
+
+            cy.get('.new-tile .btn.btn-buy').first().click()
+            preBasket("gobasket")
+            //overeni kodu produktu v kosiku
+            cy.get('.product-code').then(($codeEl) => {
+                var basketProductCode = $codeEl.text()
+                expect(categoryContentCode).to.equal(basketProductCode)
+            })
+        })
+    })
+
 
     it(('addToBasketFromHomePageCarousel'), () => {
         cy.get('#selected-for-you-carousel').scrollIntoView().should('be.visible')
@@ -31,22 +47,6 @@ describe(('testy pridavani do kosiku'), () => {
                 expect(productDetailProductCode).to.equal(basketProductCode)
             })
 
-        })
-    })
-
-    it(('addToBasketFromCategoryContent'), () => {
-        cy.getCategoryContentPage()
-        //z vypisu produktu zjisti kod produktu pro nasledne overeni
-        cy.get('.new-tile').first().find('.data-code').then(($code) => {
-            var categoryContentCode = $code.text()
-
-            cy.get('.new-tile .btn.btn-buy').first().click()
-            preBasket("gobasket")
-            //overeni kodu produktu v kosiku
-            cy.get('.product-code').then(($codeEl) => {
-                var basketProductCode = $codeEl.text()
-                expect(categoryContentCode).to.equal(basketProductCode)
-            })
         })
     })
 

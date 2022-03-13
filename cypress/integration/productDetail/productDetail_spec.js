@@ -1,7 +1,7 @@
 /// <reference types="cypress" />
 
 
-describe('Login test', () => {
+describe('Product detail', () => {
 
     //const baseUrl = Cypress.env('host').baseUrl
     const baseUrl = 'https://www.czc.cz'

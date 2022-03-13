@@ -17,23 +17,26 @@
 import './commands'
 import './loginCommands'
 import './navigationCommands'
+before(()=>{
+    //pokud neni vybrany env vyber defaultni
+    if (Cypress.env('host') == undefined) {
+        Cypress.env('host', 'prod')
+    }
+})
+
 
 beforeEach(() => {
     //načtení souboru s přihlašovacími daty uživatelů
     cy.fixture('user').as('user')
     //potvzení modálního okna s cookies - nutné před každým testem
     cy.clearCookies()
-    //pokud neni vybrany env vyber defaultni
-    if (Cypress.env('host') == null) {
-        Cypress.env('host', 'prod')
-    }
     confirmCookiesModal();
 })
 
 function confirmCookiesModal(){
-    const baseUrl = 'https://www.czc.cz'
+    const baseUrl = Cypress.env('prod').baseUrl
     cy.visit(baseUrl)
-    cy.get(".popup-content button.js-all-cookies").should('exist').last().click();
+    cy.get(".popup-content button.js-all-cookies").should('be.visible').last().click();
 }
 
 // Alternatively you can use CommonJS syntax:

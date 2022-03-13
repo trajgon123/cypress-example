@@ -4,3 +4,9 @@ cypress/videos
 cypress/screenshots
 cypress.env.json
 cypress/fixtures/user.json
+.idea/cypress.iml
+.idea/modules.xml
+.idea/runConfigurations.xml
+.idea/vcs.xml
+.idea/.gitignore
+.idea/
